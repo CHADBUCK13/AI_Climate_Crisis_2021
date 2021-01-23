@@ -25,7 +25,26 @@ def collateData():
                 type = row2['PARAMETER']
                 if year == year2:
                     #print row2
-                    collatedData = collatedData.append({'YEAR': year,
+                    if (year == 2018 or year == 2019) and row2['PARAMETER'] == 'PRECTOT':
+                        collatedData = collatedData.append({'YEAR': year,
+                                                            'STATE': state,
+                                                            'HONEY': row['HONEY'],
+                                                            'PARAMETER': row2['PARAMETER'],
+                                                            'JAN': row2['JAN'] * 30,
+                                                            'FEB': row2['FEB'] * 30,
+                                                            'MAR': row2['MAR'] * 30,
+                                                            'APR': row2['APR'] * 30,
+                                                            'MAY': row2['MAY'] * 30,
+                                                            'JUN': row2['JUN'] * 30,
+                                                            'JUL': row2['JUL'] * 30,
+                                                            'AUG': row2['AUG'] * 30,
+                                                            'SEP': row2['SEP'] * 30,
+                                                            'OCT': row2['OCT'] * 30,
+                                                            'NOV': row2['NOV'] * 30,
+                                                            'DEC': row2['DEC'] * 30,
+                                                            'ANN': row2['ANN'] * 30}, ignore_index=True)
+                    else:
+                        collatedData = collatedData.append({'YEAR': year,
                                'STATE': state,
                                'HONEY': row['HONEY'],
                                'PARAMETER': row2['PARAMETER'],
