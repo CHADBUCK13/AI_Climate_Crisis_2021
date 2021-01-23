@@ -31,7 +31,55 @@
     <Folder Include="WeatherData\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="WeatherData\NewYork.csv" />
+    <Content Include="WeatherData\ALABAMA.csv" />
+    <Content Include="WeatherData\ARIZONA.csv" />
+    <Content Include="WeatherData\ARKANSAS.csv" />
+    <Content Include="WeatherData\CALIFORNIA.csv" />
+    <Content Include="WeatherData\COLORADO.csv" />
+    <Content Include="WeatherData\CONNECTICUT.csv" />
+    <Content Include="WeatherData\DELAWARE.csv" />
+    <Content Include="WeatherData\FLORIDA.csv" />
+    <Content Include="WeatherData\GEORGIA.csv" />
+    <Content Include="WeatherData\HIWAII.csv" />
+    <Content Include="WeatherData\IDAHO.csv" />
+    <Content Include="WeatherData\ILLINOIS.csv" />
+    <Content Include="WeatherData\INDIANA.csv" />
+    <Content Include="WeatherData\IOWA.csv" />
+    <Content Include="WeatherData\KANSAS.csv" />
+    <Content Include="WeatherData\KENTUCKY.csv" />
+    <Content Include="WeatherData\LOUISIANA.csv" />
+    <Content Include="WeatherData\MAINE.csv" />
+    <Content Include="WeatherData\MARYLAND.csv" />
+    <Content Include="WeatherData\MASSACHUSETTS.csv" />
+    <Content Include="WeatherData\MICHIGAN.csv" />
+    <Content Include="WeatherData\MINNESOTA.csv" />
+    <Content Include="WeatherData\MISSISSIPPI.csv" />
+    <Content Include="WeatherData\MISSOURI.csv" />
+    <Content Include="WeatherData\MONTANA.csv" />
+    <Content Include="WeatherData\NEBRASKA.csv" />
+    <Content Include="WeatherData\NEVADA.csv" />
+    <Content Include="WeatherData\NEWHAMPSHIRE.csv" />
+    <Content Include="WeatherData\NEWJERSEY.csv" />
+    <Content Include="WeatherData\NEWMEXICO.csv" />
+    <Content Include="WeatherData\NEWYORK.csv" />
+    <Content Include="WeatherData\NORTHCAROLINA.csv" />
+    <Content Include="WeatherData\NORTHDAKOTA.csv" />
+    <Content Include="WeatherData\OHIO.csv" />
+    <Content Include="WeatherData\OKLAHOMA.csv" />
+    <Content Include="WeatherData\OREGON.csv" />
+    <Content Include="WeatherData\PENNSYLVANIA.csv" />
+    <Content Include="WeatherData\RHODEISLAND.csv" />
+    <Content Include="WeatherData\SOUTHCAROLINA.csv" />
+    <Content Include="WeatherData\SOUTHDAKOTA.csv" />
+    <Content Include="WeatherData\TENNESSEE.csv" />
+    <Content Include="WeatherData\TEXAS.csv" />
+    <Content Include="WeatherData\UTAH.csv" />
+    <Content Include="WeatherData\VERMONT.csv" />
+    <Content Include="WeatherData\VIRGINIA.csv" />
+    <Content Include="WeatherData\WASHINGTON.csv" />
+    <Content Include="WeatherData\WESTVIRGINIA.csv" />
+    <Content Include="WeatherData\WISCONSIN.csv" />
+    <Content Include="WeatherData\WYOMING.csv" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
