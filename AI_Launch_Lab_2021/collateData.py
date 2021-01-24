@@ -1,6 +1,10 @@
 # read csv using relative path
 import pandas as pd
 
+# Method to align data on honey bee production with weather data
+# Takes two CSV files in output format from data collection pass
+# Produces CSV file in specified format with one line per type of measurement
+# for each YEAR/STATE combination.
 def collateData():
     try:
       hn = pd.read_csv('HoneyData/Honey.csv')
@@ -8,23 +12,28 @@ def collateData():
     except IOError:
       print("File not accessible")
 
+    # Specify output format of file
+    # Each PARAMETER will be shown on its own line with its monthly date for State/Year
     collatedData = pd.DataFrame(columns=['PARAMETER', 'YEAR', 'STATE', 'HONEY', 'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC', 'ANN'])
 
     for i, row in hn.iterrows():
         state = row['STATE']
         year = row['YEAR']
-        #df = pd.read_csv('d:/CodingProjects/' + state + '.csv')
 
-        print(">>>>>>>>>>>>>>>State being loaded is" + state)
-        if state != 'OTHER STATES':
-            # Verify file exists
+        # For debugging: print(">>>>>>>>>>>>>>>State being loaded is" + state)
+
+        if state != 'OTHER STATES':  # Skip 'OTHER STATES' data
+            # Load weather data file for current State
             df = pd.read_csv('WeatherData/' + state + '.csv', skiprows=(17))
-            print(df.head())
+            print(df.head()) #Visual confirmation of load
+            
+            # For each weather data line, insert the honey data and add to the output
             for j, row2 in df.iterrows():
                 year2 = row2['YEAR']
                 type = row2['PARAMETER']
                 if year == year2:
-                    #print row2
+                    #In 2018/2019 they changed the precipitation data.
+                    # Need to scale by 30 to get it to be consistent with other years.
                     if (year == 2018 or year == 2019) and row2['PARAMETER'] == 'PRECTOT':
                         collatedData = collatedData.append({'YEAR': year,
                                                             'STATE': state,
@@ -62,6 +71,7 @@ def collateData():
                                'DEC': row2['DEC'],
                                'ANN': row2['ANN']}, ignore_index=True)
 
+    # Output to console for verification and to file
     print(collatedData)
     collatedData.to_csv('d:/CodingProjects/collated.csv', index=False)
 
