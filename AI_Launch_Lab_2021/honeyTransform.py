@@ -1,6 +1,8 @@
 # read csv using relative path
 import pandas as pd
 
+# Method to perform transformation of collected data into usable format
+# Computes price per lb
 def honeyTransform():
     try:
         hn = pd.read_csv('HoneyData/Detailed US Honey Data_clean.csv')
@@ -8,6 +10,7 @@ def honeyTransform():
     except IOError:
         print("File not accessible")
 
+    # Specify output format of file
     collatedData = pd.DataFrame(columns=['YEAR', 'STATE', 'NUMCOL', 'LBPERCOL', 'TOTALLB', 'PRICEPERLB', 'TOTALPRICE'])
 
     iter = 0
@@ -16,6 +19,7 @@ def honeyTransform():
     totalLb = -1
     pricePerLb = -1
     totalPrice = -1
+    # For each year/state, read in 4 rows in a row (all are guaranteed by input format to be the same state/year)
     for i, row in hn.iterrows():
         state = row['STATE']
         year = row['YEAR']
@@ -49,7 +53,7 @@ def honeyTransform():
                 pricePerLb = -1
                 totalPrice = -1
 
-
+    # Output to console for verification and to file
     print(collatedData)
     collatedData.to_csv('HoneyData/USHoneyData_Formatted.csv', index=False)
 
