@@ -4,27 +4,27 @@ import numpy as np
 import os
 import pandas as pd
  
-
+#Manual change based on import NC file data
 dataName = 'rsds'
-# Open netCDF4 file
-f = nc.Dataset(r'C:\Users\Chad\source\repos\AI_Launch_Lab_2021\AI_Launch_Lab_2021\climateModelData\rsds.rcp26.EC-EARTH.RCA4.mon.NAM-44i.raw.nc.nc4')
+
+#Open netCDF4 file
+f = nc.Dataset(r'')
 
 for var in f.variables:
     print(var)
 
-# Extract variable
-t2m = f.variables[dataName]
+#Extract variable
+variable = f.variables[dataName]
  
-
-time_dim, lat_dim, lon_dim = t2m.get_dims()
+#Get variable dimensions and names
+time_dim, lat_dim, lon_dim = variable.get_dims()
 time_var = f.variables[time_dim.name]
 times = num2date(time_var[:], time_var.units)
 latitudes = f.variables[lat_dim.name][:]
 longitudes = f.variables[lon_dim.name][:]
  
+#Read dataframe to CSV based on dataname
 output_dir = './'
- 
-
 filename = os.path.join(output_dir, dataName +'.csv')
 print(f'Writing data in tabular form to {filename} (this may take some time)...')
 times_grid, latitudes_grid, longitudes_grid = [
@@ -33,6 +33,6 @@ df = pd.DataFrame({
     'time': [t.isoformat() for t in times_grid],
     'latitude': latitudes_grid,
     'longitude': longitudes_grid,
-    dataName : t2m[:].flatten()})
+    dataName : variable[:].flatten()})
 df.to_csv(filename, index=False)
 print('Done')
