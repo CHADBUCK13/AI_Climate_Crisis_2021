@@ -3,22 +3,45 @@ import pandas as pd
 
 def collateDataComplex():
     try:
-        hn = pd.read_csv('HoneyData/USHoneyData_Formatted.csv')
+        hn = pd.read_csv('HoneyData/USHoneyData_FormattedSorted.csv')
         print(hn.head())
     except IOError:
         print("File not accessible")
 
-    collatedData = pd.DataFrame(columns=['PARAMETER', 'YEAR', 'STATE', 'NUMCOL', 'LBPERCOL', 'TOTALLB', 'PRICEPERLB', 'TOTALPRICE', 'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC', 'ANN'])
+    collatedData = pd.DataFrame(columns=['LAT', 'LON', 'PARAMETER', 'YEAR', 'STATE', 'DELTACOL', 'NUMCOL', 'LBPERCOL', 'TOTALLB', 'PRICEPERLB', 'TOTALPRICE', 'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC', 'ANN'])
 
+    # Assume in increasing chronological order so that we can compute the delta in colony size
+    LastYearColonySize = {}
     for i, row in hn.iterrows():
         state = row['STATE']
         year = row['YEAR']
+        key = state+str(year)
+        lastyear = year - 1
+        lastkey = state+str(lastyear)
 
-        print(">>>>>>>>>>>>>>>State being loaded is" + state)
+        # add this year's if this is the first time encountered
+        #if LastYearColonySize.get(key) == 'None':
+        LastYearColonySize[key] = row['NUMCOL']
+
+        percentDelta = 0
+        if year > 1987:
+            lastSize = LastYearColonySize.get(lastkey)
+            if lastSize == None:
+                print('*********** No precursor for State ' + state + ', year ' + str(year))
+
+            if lastSize != None:
+                delta = LastYearColonySize[key] - LastYearColonySize[lastkey]
+                percentDelta = round(float(delta) / float(LastYearColonySize[lastkey]) * 100, 1)
+
+                print('For State ' + state + ', Last year ' + str(lastyear) + ': ' + str(LastYearColonySize[lastkey]) +
+                  '  This year ' + str(year) + ': ' + str(LastYearColonySize[key]) +
+                  '  Delta: ' + str(delta) +  '  %Delta: ' + str(percentDelta))
+
+#        print(">>>>>>>>>>>>>>>State being loaded is" + state)
         if state != 'OTHER STATES':
             # Verify file exists
             df = pd.read_csv('WeatherData/' + state + '.csv', skiprows=(17))
-            print(df.head())
+           # print(df.head())
             for j, row2 in df.iterrows():
                 year2 = row2['YEAR']
                 type = row2['PARAMETER']
@@ -26,7 +49,10 @@ def collateDataComplex():
                     #print row2
                     if (year == 2018 or year == 2019) and row2['PARAMETER'] == 'PRECTOT':
                         collatedData = collatedData.append({'YEAR': year,
+                                                            'LAT': row2['LAT'],
+                                                            'LON': row2['LON'],
                                                             'STATE': state,
+                                                            'DELTACOL': percentDelta,
                                                             'NUMCOL': row['NUMCOL'],
                                                             'LBPERCOL': row['LBPERCOL'],
                                                             'TOTALLB': row['TOTALLB'],
@@ -48,7 +74,10 @@ def collateDataComplex():
                                                             'ANN': row2['ANN'] * 30}, ignore_index=True)
                     else:
                         collatedData = collatedData.append({'YEAR': year,
+                                                            'LAT': row2['LAT'],
+                                                            'LON': row2['LON'],
                                                             'STATE': state,
+                                                            'DELTACOL': percentDelta,
                                                             'NUMCOL': row['NUMCOL'],
                                                             'LBPERCOL': row['LBPERCOL'],
                                                             'TOTALLB': row['TOTALLB'],
